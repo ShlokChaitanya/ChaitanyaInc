@@ -1,11 +1,11 @@
 const firebaseConfig = {
-    apiKey:  secret.API_KEY,
-    authDomain: secret.AUTH_DOMAIN,
-    projectId: secret.PROJECT_ID,
-    storageBucket: secret.STORAGE_BUCKET,
-    messagingSenderId: secret.MESSAGING_SENDER_ID,
-    appId: secret.APP_ID,
-    measurementId: secret.MEASUREMENT_ID
+    apiKey:  process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKE,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID
 };
 
 firebase.initializeApp(firebaseConfig);
