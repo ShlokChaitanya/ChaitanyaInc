@@ -27,9 +27,3 @@ jobs:
         APP_ID: ${{ secrets.APP_ID }}
         MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
 
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build 
