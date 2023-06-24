@@ -16,6 +16,8 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Build
+      run: |
+        echo "Building..."
       env:
         APIKey: ${{ secrets.APIKey }}
         AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
