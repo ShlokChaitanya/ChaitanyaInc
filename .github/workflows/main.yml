@@ -18,7 +18,8 @@ jobs:
     - name: Build
       run: |
         echo "Building..."
-        npm install && npm run build
+        npm install
+        npm run-script build
       env:
         APIKey: ${{ secrets.APIKey }}
         AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
