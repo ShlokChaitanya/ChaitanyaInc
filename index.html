@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">\<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Chaitanya Inc.</title>
 </head>
 
@@ -12,12 +12,12 @@
     <style>
         ::-webkit-scrollbar {
             width: 10px;
-            background-color: rgba(17,24,39);
+            background-color: rgba(17, 24, 39);
         }
 
         ::-webkit-scrollbar-track {
             border-radius: 12px;
-            background-color: rgba(17,24,39);
+            background-color: rgba(17, 24, 39);
         }
 
         ::-webkit-scrollbar-thumb {
@@ -25,6 +25,14 @@
             border-radius: 10px;
         }
 
+        .error {
+            display: none;
+        }
+
+        .error a{
+            margin: 4px 5px;
+            color: rgba(220, 38, 38, 0.767);
+        }
     </style>
     <header class="text-gray-400 bg-gray-900 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -58,18 +66,23 @@
                     <label for="email" class="leading-7 text-sm text-gray-300">Email</label>
                     <input type="email" id="email" name="email" required
                         class="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <div class="error"> <a>Enter your email</a></div>
                 </div>
                 <div class="relative mb-4 text-left">
                     <label for="Phone" class="leading-7 text-sm text-gray-300">Contact No</label>
                     <input type="Phone" id="Phone" name="Phone" required
                         class="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <div class="error rr"> <a>Enter your Contact
+                            Number</a></div>
                 </div>
                 <div class="relative mb-4 text-left">
                     <label for="message" class="leading-7 text-sm text-gray-300">Message</label>
                     <textarea id="message" name="entry.1878256062" required
                         class="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                    <div class="error er"> <a>Enter your Message</a>
+                    </div>
                 </div>
-                <button type="submit"
+                <button id="btn"
                     class="text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg">
                     Thanks for Membership</button>
             </div>
@@ -122,6 +135,10 @@
             </span>
         </div>
     </footer>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <script src="./index.js"></script>
 </body>
 
 </html>
