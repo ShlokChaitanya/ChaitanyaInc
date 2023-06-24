@@ -27,3 +27,8 @@ jobs:
         APP_ID: ${{ secrets.APP_ID }}
         MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
 
+    - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
