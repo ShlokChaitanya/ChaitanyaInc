@@ -1,16 +1,9 @@
-const fs = require('fs');
-const secret = require('./secret.json');
-
-const firebaseConfig = {
-    apiKey: secret.API_KEY,
-    authDomain: secret.AUTH_DOMAIN,
-    projectId: secret.PROJECT_ID,
-    storageBucket: secret.STORAGE_BUCKET,
-    messagingSenderId: secret.MESSAGING_SENDER_ID,
-    appId: secret.APP_ID,
-    measurementId: secret.MEASUREMENT_ID
+export const firebaseConfig = {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID
 };
-
-const firebaseConfigString = JSON.stringify(firebaseConfig, null, 2);
-
-fs.writeFileSync('firebaseConfig.js', `const firebaseConfig = ${firebaseConfigString};\n\nexport default firebaseConfig;\n`);

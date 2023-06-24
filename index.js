@@ -1,4 +1,4 @@
-import firebaseConfig from './firebaseConfig.js';
+import { firebaseConfig } from "./build";
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const analytics = firebase.analytics();
