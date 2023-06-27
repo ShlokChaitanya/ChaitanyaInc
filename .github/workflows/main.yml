@@ -19,8 +19,8 @@ jobs:
           npm install
           npm run-script index
         env:
-          RAZORPAY_SECRET: ${{5nCkmfjFfRnzfmL6hwKDmip9}}
-          RAZORPAY_KEY_ID: ${{rzp_test_eHkH3Gvo3PpSJ8}}
+          RAZORPAY_SECRET: ${{secrets.RAZORPAY_SECRET}}
+          RAZORPAY_KEY_ID: ${{secrets.RAZORPAY_KEY_ID}}
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
