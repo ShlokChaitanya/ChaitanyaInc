@@ -19,6 +19,32 @@
         ],
         "frameworksBackend": {
             "region": "us-central1"
+        },
+        "rewrites": [
+            {
+                "source": "/payment/**",
+                "function": "app"
+            },
+            {
+                "source": "/api",
+                "function": "app"
+            },
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ]
+    },
+    "functions": [
+        {
+            "source": "functions",
+            "codebase": "default",
+            "ignore": [
+                "node_modules",
+                ".git",
+                "firebase-debug.log",
+                "firebase-debug.*.log"
+            ]
         }
-    }
+    ]
 }

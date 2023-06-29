@@ -3,10 +3,8 @@ import './User.css'
 import { useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { extractTextFromImage } from './Function';
 import generateToken from './Function';
 import { storage, db } from './FireBase';
-import { v4 } from 'uuid';
 
 function User(props) {
     const { username } = props.match.params;
@@ -37,7 +35,7 @@ function User(props) {
             console.log('Uploaded a blob or file!');
 
             const downloadURL = await getDownloadURL(storageRef);
-            const extractedText = await extractTextFromImage(downloadURL);
+            const extractedText = downloadURL;
             const isTransactionWithinHour = checkTransactionWithinHour(extractedText);
 
             if (isTransactionWithinHour) {

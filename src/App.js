@@ -6,6 +6,7 @@ import AboutUs from './Components/AboutUs';
 import ContactUs from './Components/ContactUs';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import User from './Components/User';
+import NotFound from './Components/NotFound';
 
 function App() {
     return (
@@ -16,7 +17,7 @@ function App() {
                     <Route exact path="/" component={Home} />
                     <Route path="/AboutUs" component={AboutUs} />
                     <Route path="/ContactUs" component={ContactUs} />
-                    <Route path="/User/:username" component={User} />
+                    <Route path="*" component={NotFound} />
                 </Switch>
                 <Footer />
             </div>
