@@ -20,28 +20,29 @@ function Register() {
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        if (!phoneNumberErrorMessage && !emailErrorMessage && !messageErrorMessage && !nameErrorMessage && phoneNumber && email && message && name) {
-            const UserId = generateToken(12);
-            const contactRef = doc(db, "User", UserId);
-            const contactData = {
-                email: email, username: name, message: message,
-                phoneNumber: phoneNumber, userId: UserId, 
-                transcationId: '',
-                createdAt: new Date().toISOString(),
-            };
-            setDoc(contactRef, contactData)
-                .then(() => {
-                    alert("Welcome aboard! Get ready to embark on an incredible journey with us.");
-                    setPhoneNumber(''); setEmail(''); setMessage('');
-                    displayRazorpay(name, email, phoneNumber, UserId);
-                })
-                .catch((error) => {
-                    console.error('Error writing document: ', error);
-                }
-                );
-        } else {
+
+        if ( phoneNumberErrorMessage || emailErrorMessage || messageErrorMessage || nameErrorMessage || !phoneNumber || !email || !message || !name ) {
             alert('Please fill the form correctly.');
+            return;
         }
+
+        const userId = generateToken(12);
+        const transactionId = generateToken(12);
+        const contactData = {
+            email, username: name, message, paymentStatus: false, 
+            phoneNumber, userId, transcationId: transactionId,
+            createdAt: new Date().toISOString(),
+        };
+        const contactRef = doc(db, "User", userId);
+
+        setDoc(contactRef, contactData).then(() => {
+                alert('Welcome aboard! Get ready to embark on an incredible journey with us.');
+                displayRazorpay(name, email, phoneNumber, userId, transactionId);
+                setPhoneNumber(''); setEmail(''); setMessage(''); setName('');
+            })
+            .catch((error) => {
+                console.error('Error writing document:', error);
+            });
     };
 
     const emailHandler = (event) => {

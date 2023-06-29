@@ -1,21 +1,43 @@
 import axios from 'axios';
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "./FireBase.js";
 
-function generateToken(TokenLength) {
+export function generateToken(tokenLength) {
     const alphanumericCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const TokenIdLength = TokenLength || 10;
-    let TokenId = '';
+    const tokenIdLength = tokenLength || 10;
+    let tokenId = '';
 
-    for (let i = 0; i < TokenIdLength; i++) {
+    for (let i = 0; i < tokenIdLength; i++) {
         const randomIndex = Math.floor(Math.random() * alphanumericCharacters.length);
-        TokenId += alphanumericCharacters[randomIndex];
+        tokenId += alphanumericCharacters[randomIndex];
     }
 
-    return TokenId;
+    return tokenId;
 }
 
 export default generateToken;
 
-export function loadScript(src) {
+async function success(userId) {
+    alert("Thanks for your payment! We'll send you a confirmation email shortly.");
+    const paymentDocRef = doc(db, 'transactionHistory', userId);
+    const userRef = doc(db, 'User', userId);
+    await Promise.all([
+        setDoc(paymentDocRef, { status: "completed" }, { merge: true }),
+        setDoc(userRef, { paymentStatus: true }, { merge: true }),
+    ]);
+}
+
+async function failure(userId) {
+    alert("Oops! Something went wrong. Please try again.");
+    const paymentDocRef = doc(db, 'transactionHistory', userId);
+    const userRef = doc(db, 'User', userId);
+    await Promise.all([
+        setDoc(paymentDocRef, { status: "failed" }, { merge: true }),
+        setDoc(userRef, { paymentStatus: false }, { merge: true }),
+    ]);
+}
+
+function loadScript(src) {
     return new Promise((resolve) => {
         const script = document.createElement("script");
         script.src = src;
@@ -29,7 +51,7 @@ export function loadScript(src) {
     });
 }
 
-export async function displayRazorpay(userName, email, phoneNumber, userId) {
+export async function displayRazorpay(userName, email, phoneNumber, userId, transactionId) {
     const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
 
     if (!res) {
@@ -37,10 +59,9 @@ export async function displayRazorpay(userName, email, phoneNumber, userId) {
         return;
     }
 
-    const path = window.location.origin;
-    const result = await axios.post(path + '/payment/orders');
+    const result = await axios.post('/payment/orders', { userId, transactionId });
 
-    if (!result || !result.data || !result.data.amount || !result.data.id || !result.data.currency) {
+    if (!result) {
         alert('Invalid server response. Are you online?');
         return;
     }
@@ -50,11 +71,11 @@ export async function displayRazorpay(userName, email, phoneNumber, userId) {
     const options = {
         key: 'rzp_test_eHkH3Gvo3PpSJ8',
         amount: amount.toString(),
-        currency: currency,
-        name: 'Chaitanya Ic.',
+        currency,
+        name: 'Chaitanya Inc.',
         description: 'Test Transaction',
-        image: 'https://raw.githubusercontent.com/ShlokChaitanya/ChaitanyaInc/main/logo.jpg',
-        order_id: order_id,
+        image: 'https://raw.githubusercontent.com/ShlokChaitanya/ChaitanyaInc/main/download.png',
+        order_id,
         handler: async function (response) {
             const data = {
                 orderCreationId: order_id,
@@ -63,25 +84,13 @@ export async function displayRazorpay(userName, email, phoneNumber, userId) {
                 razorpaySignature: response.razorpay_signature,
             };
 
-            const result = await axios.post(path + '/payment/success', data);
-
-            alert(result.data.msg);
-            // Additional code for handling payment success and updating database
-            // const paymentDocRef = doc(db, 'transactionHistory');
-            // const userRef = doc(db, 'User', username);
-            // const paymentData = {
-            //     transactionId: transactionId,
-            //     uploadTimestamp: serverTimestamp(),
-            // };
-            // await Promise.all([
-            //     setDoc(paymentDocRef, paymentData),
-            //     setDoc(userRef, { transcationId: transactionId }, { merge: true }),
-            // ]);
+            const result = await axios.post('/payment/success', data);
+            result.data.msg === "success" ? success(userId) : failure(userId);
         },
         prefill: {
             name: userName,
-            email: email,
-            contact: `${phoneNumber}`,
+            email,
+            contact: phoneNumber,
         },
         notes: {
             address: 'Chaitanya Inc.',
