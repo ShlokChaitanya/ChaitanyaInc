@@ -1,0 +1,23 @@
+html{
+    background-color: rgba(17, 24, 39);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgba(17, 24, 39);
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 12px;
+    background-color: rgba(17, 24, 39);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.605);
+    border-radius: 10px;
+}
+
+.error a{
+    margin: 4px 5px;
+    color: rgba(220, 38, 38, 0.767);
+}
